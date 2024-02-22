@@ -1,0 +1,47 @@
+unmanaged implementation in class zbp_i_user_118 unique;
+strict ( 2 );
+
+with draft;
+
+define behavior for ZI_USER_118 alias User
+//late numbering
+draft table zdt_user_d_118
+lock master
+total etag LocalLastChangedAt
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+
+  validation validateDept on save { field Dept; }
+  validation validateTeam on save { field Team; }
+  validation validateRpto on save { field RepTo; }
+
+  draft determine action Prepare
+  {
+    validation validateDept;
+    validation validateTeam;
+    validation validateRpto;
+  }
+
+  field ( readonly : update ) Ein;
+  field ( readonly ) DeptDesc, TeamDesc, RepName;
+
+  mapping for zdt_user_118
+    {
+      Ein                = ein;
+      EmpName            = emp_name;
+      Dept               = dept;
+      Team               = team;
+      RepTo              = rep_to;
+      UserId             = user_id;
+      LocalLastChangedAt = locallastchangedat;
+    }
+}

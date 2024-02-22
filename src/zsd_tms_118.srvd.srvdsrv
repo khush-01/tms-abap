@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition for TMS'
+define service ZSD_TMS_118 {
+  expose ZC_USER_118 as User;
+}
